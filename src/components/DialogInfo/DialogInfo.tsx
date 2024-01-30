@@ -10,8 +10,21 @@ interface DialogProps {
 }
 const DialogInfo = ({ isOpen, node, onDismiss }: DialogProps) => {
   return (
-    <Dialog title={"test"} onClose={onDismiss} visible={isOpen} zIndex={1000}>
+    <Dialog
+      title={"Person Info"}
+      onClose={onDismiss}
+      visible={isOpen}
+      zIndex={1000}
+      style={{ textAlign: "center" }}
+    >
       <h3>{node?.info?.name || ""} </h3>
+      <div>
+        <img src={node?.info?.avatar} alt={node?.info?.name} />
+      </div>
+      <div>
+        {node?.info?.birth}
+        {node?.info?.death !== "" ? ` - ${node?.info?.death}` : ""}
+      </div>
     </Dialog>
   );
 };

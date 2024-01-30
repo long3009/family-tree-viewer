@@ -3,6 +3,7 @@ import classNames from "classnames";
 import type { ExtNode } from "relatives-tree/lib/types";
 import css from "./FamilyNode.module.css";
 import type { CustomNode } from "../const";
+import moment from "moment";
 
 interface FamilyNodeProps {
   node: CustomNode;
@@ -26,7 +27,16 @@ export const FamilyNode = React.memo(function FamilyNode({
     () => onSubClick(node.id),
     [node.id, onSubClick],
   );
-
+  const getAges = (birth: string, death: string) => {
+    if (death === "") {
+      return moment().diff(moment(birth, "DD/MM/YYYY"), "years");
+    } else {
+      return moment(death, "DD/MM/YYYY").diff(
+        moment(birth, "DD/MM/YYYY"),
+        "years",
+      );
+    }
+  };
   return (
     <div className={css.root} style={style}>
       <div
@@ -43,12 +53,19 @@ export const FamilyNode = React.memo(function FamilyNode({
           <div>
             <img
               src={node.info?.avatar}
-              alt="node.info?.name"
+              alt={node.info?.name}
               width={50}
               height={50}
             />
           </div>
-          <div>{node.info?.birth}</div>
+          <div>
+            {node.info?.birth}
+            {node.info?.death !== "" ? ` - ${node.info?.death}` : ""}
+          </div>
+          <div>
+            Ages:
+            {getAges(node.info?.birth as string, node.info?.death as string)}
+          </div>
         </div>
       </div>
       {node.hasSubTree && (

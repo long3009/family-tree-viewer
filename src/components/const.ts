@@ -16,7 +16,9 @@ export const NODE_HEIGHT = 280;
 export interface NodeInfo {
   name?: string;
   birth?: string;
+  death?: string;
   avatar?: string;
+  notes?: string;
 }
 export interface CustomNode extends ExtNode {
   info?: NodeInfo;
