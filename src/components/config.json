@@ -1,0 +1,42 @@
+[
+  {
+    "id": "1",
+    "gender": "male",
+    "parents": [],
+    "siblings": [],
+    "spouses": [
+      {
+        "id": "2",
+        "type": "married"
+      }
+    ],
+    "children": [],
+    "info": {
+      "name": "test",
+      "birth": "29/01/2024",
+      "death": "29/01/2024",
+      "note": "",
+      "avatar": "https://github.com/long3009/familytree/blob/0ff9f33f3d5ae8afaa6327df3b96846ff7e9eafa/man-avatar.png?raw=true"
+    }
+  },
+  {
+    "id": "2",
+    "gender": "female",
+    "parents": [],
+    "siblings": [],
+    "spouses": [
+      {
+        "id": "1",
+        "type": "married"
+      }
+    ],
+    "children": [],
+    "info": {
+      "name": "test2",
+      "birth": "29/01/2024",
+      "death": "29/01/2024",
+      "note": "",
+      "avatar": "https://github.com/long3009/familytree/blob/main/woman-avatar.png?raw=true"
+    }
+  }
+]
