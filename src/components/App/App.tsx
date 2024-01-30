@@ -35,6 +35,7 @@ export default React.memo(function App() {
     process.env.REACT_APP_JSON_URL,
   );
   useEffect(() => {
+    console.log("JSON url", process.env.REACT_APP_JSON_URL);
     fetch(jsonURL)
       .then((resp) => resp.json())
       .then((data) => Array.isArray(data) && setNodes(data))
