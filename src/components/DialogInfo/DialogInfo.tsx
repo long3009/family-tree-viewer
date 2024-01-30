@@ -19,7 +19,12 @@ const DialogInfo = ({ isOpen, node, onDismiss }: DialogProps) => {
     >
       <h3>{node?.info?.name || ""} </h3>
       <div>
-        <img src={node?.info?.avatar} alt={node?.info?.name} />
+        <img
+          src={node?.info?.avatar}
+          alt={node?.info?.name}
+          width={200}
+          height={200}
+        />
       </div>
       <div>
         {node?.info?.birth}
