@@ -32,7 +32,7 @@ export default React.memo(function App() {
   const [selectedNode, setSelectedNode] = useState<CustomNode>();
 
   const [jsonURL, setJsonURL] = useState(
-    process.env.REACT_APP_JSON_URL,
+    process.env.REACT_APP_JSON_URL
   );
   useEffect(() => {
     console.log("JSON url", process.env.REACT_APP_JSON_URL);
