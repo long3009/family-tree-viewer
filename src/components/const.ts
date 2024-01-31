@@ -18,7 +18,7 @@ export interface NodeInfo {
   birth?: string;
   death?: string;
   avatar?: string;
-  notes?: string;
+  note?: string;
 }
 export interface CustomNode extends ExtNode {
   info?: NodeInfo;
