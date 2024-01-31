@@ -11,7 +11,7 @@ import fmJSON from "./config.json";
 import type { Node } from "relatives-tree/lib/types";
 import type { ExtNode } from "relatives-tree/lib/types";
 export const NODE_WIDTH = 260;
-export const NODE_HEIGHT = 280;
+export const NODE_HEIGHT = 200;
 
 export interface NodeInfo {
   name?: string;

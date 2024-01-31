@@ -30,7 +30,7 @@ const DialogInfo = ({ isOpen, node, onDismiss }: DialogProps) => {
         {node?.info?.birth}
         {node?.info?.death !== "" ? ` - ${node?.info?.death}` : ""}
       </div>
-      <div>Other Info:</div>
+      {node?.info?.note && <div>Other Info:</div>}
       <div style={{ whiteSpace: "pre-line" }}>{node?.info?.note}</div>
     </Dialog>
   );
