@@ -5,7 +5,8 @@ import ReactFamilyTree from "react-family-tree";
 import { SourceSelect } from "../SourceSelect/SourceSelect";
 import { PinchZoomPan } from "../PinchZoomPan/PinchZoomPan";
 import { FamilyNode } from "../FamilyNode/FamilyNode";
-import { NodeDetails } from "../NodeDetails/NodeDetails";
+import { database } from "./firebase";
+import { ref, set, child, get } from "firebase/database";
 import {
   NODE_WIDTH,
   NODE_HEIGHT,
@@ -31,16 +32,41 @@ export default React.memo(function App() {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedNode, setSelectedNode] = useState<CustomNode>();
 
-  const [jsonURL, setJsonURL] = useState(
-    process.env.REACT_APP_JSON_URL
-  );
-  useEffect(() => {
-    console.log("JSON url", process.env.REACT_APP_JSON_URL);
-    fetch(jsonURL)
-      .then((resp) => resp.json())
-      .then((data) => Array.isArray(data) && setNodes(data))
-      .catch(() => {});
-  }, [jsonURL]);
+  const [jsonURL, setJsonURL] = useState(process.env.REACT_APP_JSON_URL);
+  // useEffect(() => {
+  //   console.log("JSON url", process.env.REACT_APP_JSON_URL);
+  //   fetch(jsonURL)
+  //     .then((resp) => resp.json())
+  //     .then((data) => Array.isArray(data) && setNodes(data))
+  //     .catch(() => {});
+  // }, [jsonURL]);
+  React.useEffect(() => {
+    getFromFirebase();
+  }, []);
+  const getFromFirebase = () => {
+    const dbRef = ref(database);
+    get(child(dbRef, `users`))
+      .then((snapshot: any) => {
+        if (snapshot.exists()) {
+          let jsonData = snapshot.val();
+          console.log("jsonData", jsonData);
+          if(Array.isArray(jsonData)) {
+            jsonData.forEach((item) => {
+              if(!item.parents) item.parents = [];
+              if(!item.siblings) item.siblings = [];
+              if(!item.children) item.children = [];
+              if(!item.spouses) item.spouses = [];
+            })
+            setNodes(jsonData);
+          }
+        } else {
+          console.log("No data available");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
   const handleDismiss = () => {
     setIsOpen(false);
   };
