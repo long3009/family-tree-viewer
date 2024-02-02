@@ -124,7 +124,22 @@ export default React.memo(function App() {
       const y =
         ((treeData.canvas.height - node.top) / treeData.canvas.height) *
         canvasHeight;
-      refPZ.current?.SetFocus(x - NODE_WIDTH, y - NODE_HEIGHT);
+      const translateX =
+        window.innerWidth > canvasWidth
+          ? 0
+          : Math.floor(canvasWidth / 2 / window.innerWidth);
+      const translateY =
+        window.innerHeight > canvasHeight
+          ? 0
+          : Math.floor(canvasHeight / 2 / window.innerHeight);
+      // console.log("translateX", translateX);
+      // console.log("translateY", translateY);
+      refPZ.current?.SetFocus(
+        x - NODE_WIDTH / 2 - translateX * window.innerWidth,
+        y - NODE_HEIGHT / 2 - translateY * window.innerHeight,
+      );
+      // console.log("windowWidth", window.innerWidth);
+      // console.log("windowHeight", window.innerHeight);
       setHoverId(nodeId);
     }
   };
