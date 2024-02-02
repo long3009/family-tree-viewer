@@ -29,12 +29,13 @@ export const FamilyNode = React.memo(function FamilyNode({
   );
   const getAges = (birth: string, death: string) => {
     if (death === "") {
-      return moment().diff(moment(birth, "DD/MM/YYYY"), "years");
+      const birthYear = moment(birth, "DD/MM/YYYY").year();
+      const currentYear = moment().year();
+      return currentYear - birthYear;
     } else {
-      return moment(death, "DD/MM/YYYY").diff(
-        moment(birth, "DD/MM/YYYY"),
-        "years",
-      );
+      const birthYear = moment(birth, "DD/MM/YYYY").year();
+      const deathYear = moment(death, "DD/MM/YYYY").year();
+      return deathYear - birthYear;
     }
   };
   return (
@@ -59,7 +60,7 @@ export const FamilyNode = React.memo(function FamilyNode({
             />
           </div>
           <div>
-            {node.info?.birth}
+            {moment(node.info?.birth, "DD/MM/YYYY").year()}
             {node.info?.death !== "" ? ` - ${node.info?.death}` : ""}
           </div>
           <div>
