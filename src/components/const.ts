@@ -10,8 +10,8 @@ import testTreeN2 from "relatives-tree/samples/test-tree-n2.json";
 import fmJSON from "./config.json";
 import type { Node } from "relatives-tree/lib/types";
 import type { ExtNode } from "relatives-tree/lib/types";
-export const NODE_WIDTH = 260;
-export const NODE_HEIGHT = 200;
+export const NODE_WIDTH = 200;
+export const NODE_HEIGHT = 150;
 
 export interface NodeInfo {
   name?: string;

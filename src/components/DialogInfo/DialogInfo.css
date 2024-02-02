@@ -1,0 +1,45 @@
+.container {
+  text-align: center;
+}
+.rc-dialog-body {
+  padding: 0px !important;
+}
+.upc {
+  width: 100%;
+  margin: 0px;
+  border-radius: 4px;
+  padding: 0px;
+  background: white;
+}
+.gradiant-man {
+  background-image: linear-gradient(#a4ecff, #49cdf1);
+  height: 125px;
+  border-radius: 4px 4px 0px 0px;
+}
+.gradiant-woman {
+  background-image: linear-gradient(#fdaed8, #fa76bd);
+  height: 125px;
+  border-radius: 4px 4px 0px 0px;
+}
+.profile-down img {
+  height: 150px;
+  border-radius: 100px;
+  margin-top: -75px;
+  padding: 5px;
+  background: white;
+}
+.profile-title {
+  font-size: 20px;
+  font-weight: bold;
+}
+.profile-year {
+  font-size: 14px;
+  font-style: italic;
+  font-weight: bold;
+}
+.profile-description {
+  border-top: 1px solid lightgray;
+  font-size: 14px;
+  padding: 20px 40px;
+  white-space: pre-line;
+}
