@@ -22,7 +22,6 @@ import DialogInfo from "../DialogInfo/DialogInfo";
 export default React.memo(function App() {
   const [source, setSource] = useState(DEFAULT_SOURCE);
   const [nodes, setNodes] = useState(SOURCES[source]);
-
   const firstNodeId = useMemo(() => nodes[0].id, [nodes]);
   const [rootId, setRootId] = useState(firstNodeId);
 
@@ -50,13 +49,13 @@ export default React.memo(function App() {
         if (snapshot.exists()) {
           let jsonData = snapshot.val();
           console.log("jsonData", jsonData);
-          if(Array.isArray(jsonData)) {
+          if (Array.isArray(jsonData)) {
             jsonData.forEach((item) => {
-              if(!item.parents) item.parents = [];
-              if(!item.siblings) item.siblings = [];
-              if(!item.children) item.children = [];
-              if(!item.spouses) item.spouses = [];
-            })
+              if (!item.parents) item.parents = [];
+              if (!item.siblings) item.siblings = [];
+              if (!item.children) item.children = [];
+              if (!item.spouses) item.spouses = [];
+            });
             setNodes(jsonData);
           }
         } else {
