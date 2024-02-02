@@ -46,6 +46,7 @@ export const FamilyNode = React.memo(function FamilyNode({
           css[node.gender],
           isRoot && css.isRoot,
           isHover && css.isHover,
+          node.info?.death !== "" && css["dead"],
         )}
         onClick={clickHandler}
       >
@@ -61,10 +62,12 @@ export const FamilyNode = React.memo(function FamilyNode({
           </div>
           <div>
             {moment(node.info?.birth, "DD/MM/YYYY").year()}
-            {node.info?.death !== "" ? ` - ${node.info?.death}` : ""}
+            {node.info?.death !== ""
+              ? ` - ${moment(node.info?.death, "DD/MM/YYYY").year()}`
+              : ""}
           </div>
           <div>
-            Ages:
+            Tuổi:
             {getAges(node.info?.birth as string, node.info?.death as string)}
           </div>
         </div>

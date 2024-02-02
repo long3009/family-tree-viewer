@@ -11,7 +11,7 @@ interface DialogProps {
 const DialogInfo = ({ isOpen, node, onDismiss }: DialogProps) => {
   return (
     <Dialog
-      title={"Person Info"}
+      title={"Thông tin chi tiết"}
       onClose={onDismiss}
       visible={isOpen}
       zIndex={1000}
@@ -30,7 +30,7 @@ const DialogInfo = ({ isOpen, node, onDismiss }: DialogProps) => {
         {node?.info?.birth}
         {node?.info?.death !== "" ? ` - ${node?.info?.death}` : ""}
       </div>
-      {node?.info?.note && <div>Other Info:</div>}
+      {node?.info?.note && <div>Thông tin khác:</div>}
       <div style={{ whiteSpace: "pre-line" }}>{node?.info?.note}</div>
     </Dialog>
   );

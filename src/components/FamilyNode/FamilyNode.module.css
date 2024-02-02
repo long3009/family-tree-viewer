@@ -24,6 +24,9 @@
   background: #fdaed8;
 }
 
+.dead {
+  background: #ccc;
+}
 .isRoot {
   border-color: rgba(0, 0, 0, 0.4);
 }
