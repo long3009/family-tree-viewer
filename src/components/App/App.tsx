@@ -1,9 +1,15 @@
-import React, { useMemo, useState, useCallback, useEffect } from "react";
+import React, {
+  useMemo,
+  useState,
+  useCallback,
+  useEffect,
+  useRef,
+} from "react";
 import type { Node, ExtNode } from "relatives-tree/lib/types";
 import treePackage from "relatives-tree/package.json";
 import ReactFamilyTree from "react-family-tree";
 import { SourceSelect } from "../SourceSelect/SourceSelect";
-import { PinchZoomPan } from "../PinchZoomPan/PinchZoomPan";
+import { PinchZoomPan, RefObject } from "../PinchZoomPan/PinchZoomPan";
 import { FamilyNode } from "../FamilyNode/FamilyNode";
 import { database } from "./firebase";
 import { ref, set, child, get } from "firebase/database";
@@ -18,6 +24,8 @@ import { getNodeStyle } from "./utils";
 
 import css from "./App.module.css";
 import DialogInfo from "../DialogInfo/DialogInfo";
+import calcTree from "relatives-tree";
+import Select from "react-select";
 
 export default React.memo(function App() {
   const [source, setSource] = useState(DEFAULT_SOURCE);
@@ -30,7 +38,7 @@ export default React.memo(function App() {
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedNode, setSelectedNode] = useState<CustomNode>();
-
+  const [options, setOptions] = useState([]);
   const [jsonURL, setJsonURL] = useState(process.env.REACT_APP_JSON_URL);
   // useEffect(() => {
   //   console.log("JSON url", process.env.REACT_APP_JSON_URL);
@@ -50,13 +58,16 @@ export default React.memo(function App() {
           let jsonData = snapshot.val();
           console.log("jsonData", jsonData);
           if (Array.isArray(jsonData)) {
+            let listOptions: any = [];
             jsonData.forEach((item) => {
               if (!item.parents) item.parents = [];
               if (!item.siblings) item.siblings = [];
               if (!item.children) item.children = [];
               if (!item.spouses) item.spouses = [];
+              listOptions.push({ value: item.id, label: item.info?.name });
             });
             setNodes(jsonData);
+            setOptions(listOptions);
           }
         } else {
           console.log("No data available");
@@ -92,27 +103,57 @@ export default React.memo(function App() {
   const openDialog = (node: CustomNode) => {
     setIsOpen(true);
     setSelectedNode(node);
+    setHoverId(undefined);
   };
-
+  const refPZ = useRef<RefObject>(null);
+  const handleFocusToNode = (nodeId: string) => {
+    const treeData = calcTree(nodes, { rootId });
+    console.log("treeData", treeData);
+    const node = treeData.nodes.find(
+      (item) => item.id.toString() === nodeId.toString(),
+    );
+    if (node) {
+      // console.log("node", node.left, node.top);
+      const canvasWidth = (treeData.canvas.width * NODE_WIDTH) / 2;
+      const canvasHeight = (treeData.canvas.height * NODE_HEIGHT) / 2;
+      // console.log("canvasWidth", canvasWidth);
+      // console.log("canvasHeight", canvasHeight);
+      const x =
+        ((treeData.canvas.width - node.left) / treeData.canvas.width) *
+        canvasWidth;
+      const y =
+        ((treeData.canvas.height - node.top) / treeData.canvas.height) *
+        canvasHeight;
+      refPZ.current?.SetFocus(x - NODE_WIDTH, y - NODE_HEIGHT);
+      setHoverId(nodeId);
+    }
+  };
+  const handleChangeOption = (event: any) => {
+    console.log("Change option", event);
+    if (event) {
+      handleFocusToNode(event.value);
+    }
+  };
   return (
     <div className={css.root}>
-      {/* <header className={css.header}>
-          <h1 className={css.title}>
-            FamilyTree demo
-            <span className={css.version}>
-              core: {treePackage.version}
-            </span>
-          </h1>
+      <div style={{ width: 400 }}>
+        <Select
+          options={options}
+          onChange={(e) => handleChangeOption(e)}
+          isClearable
+          isSearchable
+        />
+      </div>
 
-          <div>
-            <label>Source: </label>
-            <SourceSelect value={source} items={SOURCES} onChange={changeSourceHandler} />
-          </div>
-
-          <a href="https://github.com/SanichKotikov/react-family-tree-example">GitHub</a>
-        </header> */}
+      {/* <button onClick={(e) => handleFocusToNode("4")}>Test</button> */}
       {nodes.length > 0 && (
-        <PinchZoomPan min={0.5} max={2.5} captureWheel className={css.wrapper}>
+        <PinchZoomPan
+          min={0.5}
+          max={2.5}
+          captureWheel
+          className={css.wrapper}
+          ref={refPZ}
+        >
           <ReactFamilyTree
             nodes={nodes}
             rootId={rootId}
@@ -133,20 +174,6 @@ export default React.memo(function App() {
           />
         </PinchZoomPan>
       )}
-      {rootId !== firstNodeId && (
-        <button className={css.reset} onClick={resetRootHandler}>
-          Reset
-        </button>
-      )}
-      {/* {selected && (
-        <NodeDetails
-          node={selected}
-          className={css.details}
-          onSelect={setSelectId}
-          onHover={setHoverId}
-          onClear={() => setHoverId(undefined)}
-        />
-      )} */}
       <DialogInfo
         isOpen={isOpen}
         onDismiss={handleDismiss}
