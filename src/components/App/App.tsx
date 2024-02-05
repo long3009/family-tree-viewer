@@ -26,7 +26,7 @@ import css from "./App.module.css";
 import DialogInfo from "../DialogInfo/DialogInfo";
 import calcTree from "relatives-tree";
 import Select from "react-select";
-
+import * as crypto from "crypto-js";
 export default React.memo(function App() {
   const [source, setSource] = useState(DEFAULT_SOURCE);
   const [nodes, setNodes] = useState(SOURCES[source]);
@@ -55,7 +55,12 @@ export default React.memo(function App() {
     get(child(dbRef, `users`))
       .then((snapshot: any) => {
         if (snapshot.exists()) {
-          let jsonData = snapshot.val();
+          //if not encrypted
+          // const jsonData = snapshot.val();
+          let cipherText = snapshot.val();
+          let bytes = crypto.AES.decrypt(cipherText, "admin");
+          const decrypted = bytes.toString(crypto.enc.Utf8);
+          const jsonData = JSON.parse(decrypted);
           console.log("jsonData", jsonData);
           if (Array.isArray(jsonData)) {
             let listOptions: any = [];
