@@ -15,7 +15,7 @@ export const LoginPage = () => {
 
     // Here you would usually send a request to your backend to authenticate the user
     // For the sake of this example, we're using a mock authentication
-    if (username === "user" && password === "password") {
+    if (username === "hopham" && password === "hopham") {
       // Replace with actual authentication logic
       setCookie("isLogin", "true", { path: "/" });
       setAuthenticated(true);
@@ -28,6 +28,8 @@ export const LoginPage = () => {
   return (
     <div className="login-container">
       <div className="main">
+        <h1>Thông tin gia phả</h1>
+        <h3>Vui lòng đăng nhập để xem chi tiết</h3>
         <form onSubmit={handleLogin}>
           <div>
             <label htmlFor="username" className="custom-label">
