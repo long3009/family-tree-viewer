@@ -169,7 +169,7 @@ export default React.memo(function FamilyTree() {
       {/* <button onClick={(e) => handleFocusToNode("4")}>Test</button> */}
       {nodes.length > 0 && (
         <PinchZoomPan
-          min={0.5}
+          min={0.1}
           max={2.5}
           captureWheel
           className={css.wrapper}
