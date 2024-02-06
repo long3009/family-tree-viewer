@@ -15,13 +15,16 @@ export const LoginPage = () => {
 
     // Here you would usually send a request to your backend to authenticate the user
     // For the sake of this example, we're using a mock authentication
-    if (username === "hopham" && password === "hopham") {
+    if (
+      username.toLowerCase() === "hopham" &&
+      password.toLowerCase() === "hopham"
+    ) {
       // Replace with actual authentication logic
       setCookie("isLogin", "true", { path: "/" });
       setAuthenticated(true);
       navigate("/");
     } else {
-      alert("Invalid username or password");
+      alert("Sai thông tin đăng nhập");
     }
   };
 
