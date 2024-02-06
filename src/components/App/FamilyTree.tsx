@@ -156,12 +156,13 @@ export default React.memo(function FamilyTree() {
   };
   return (
     <div className={css.root}>
-      <div style={{ width: 400 }}>
+      <div style={{ width: "50%" }}>
         <Select
           options={options}
           onChange={(e) => handleChangeOption(e)}
           isClearable
           isSearchable
+          placeholder="Tìm kiếm..."
         />
       </div>
 
